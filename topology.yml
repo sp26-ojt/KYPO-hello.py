@@ -37,4 +37,5 @@ router_mappings:
     ip: 10.10.10.1
   - router: main-router
     network: user-network
+
     ip: 192.168.1.1
