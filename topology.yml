@@ -1,19 +1,3 @@
-# Định nghĩa các node (máy ảo)
-hosts:
-  - name: web-server
-    os_type: linux
-    flavor: standard.small
-    image: debian-11-bullseye
-  - name: user-pc
-    os_type: linux
-    flavor: standard.small
-    image: debian-11-bullseye
-
-# Định nghĩa Router để điều phối mạng
-routers:
-  - name: main-router
-    flavor: standard.small
-
 # Định nghĩa các dải mạng (Subnets)
 networks:
   - name: dmz-network
@@ -21,7 +5,25 @@ networks:
   - name: user-network
     cidr: 192.168.1.0/24
 
-# Kết nối các máy vào mạng
+# Định nghĩa Router
+routers:
+  - name: main-router
+    cidr: 10.10.0.0/16 # Dải IP quản lý của router (tùy chọn theo hệ thống)
+    flavor: standard.small
+
+# Định nghĩa các máy ảo (SỬA LỖI TẠI ĐÂY)
+hosts:
+  - name: web-server
+    base_box: 
+      image: debian-11-bullseye  # Thay bằng tên Image chính xác trong OpenStack của bạn
+    flavor: standard.small
+    
+  - name: user-pc
+    base_box:
+      image: debian-11-bullseye  # Thay bằng tên Image chính xác trong OpenStack của bạn
+    flavor: standard.small
+
+# Kết nối Host vào Network
 net_mappings:
   - host: web-server
     network: dmz-network
@@ -30,12 +32,11 @@ net_mappings:
     network: user-network
     ip: 192.168.1.50
 
-# Kết nối Router vào cả 2 mạng
+# Kết nối Router vào Network
 router_mappings:
   - router: main-router
     network: dmz-network
     ip: 10.10.10.1
   - router: main-router
     network: user-network
-
     ip: 192.168.1.1
