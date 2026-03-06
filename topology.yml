@@ -1,7 +1,7 @@
 # 1. Tên định danh
 name: my-custom-cyber-lab
 
-# 2. Định nghĩa Hosts TRƯỚC (Để Groups có cái mà tham chiếu)
+# 2. Định nghĩa Hosts
 hosts:
   - name: web-server
     base_box: 
@@ -19,19 +19,19 @@ routers:
       image: debian-11-bullseye
     flavor: standard.small
 
-# 4. Định nghĩa Groups (Sau khi đã có hosts và routers)
-groups:
-  - name: internal-servers
-    nodes:
-      - web-server
-      - user-pc
-
-# 5. Định nghĩa Networks
+# 4. Định nghĩa Networks (ĐƯA LÊN TRƯỚC GROUPS)
 networks:
   - name: dmz-network
     cidr: 10.10.10.0/24
   - name: user-network
     cidr: 192.168.1.0/24
+
+# 5. Định nghĩa Groups
+groups:
+  - name: internal-servers
+    nodes:
+      - web-server
+      - user-pc
 
 # 6. Định nghĩa Net Mappings
 net_mappings:
