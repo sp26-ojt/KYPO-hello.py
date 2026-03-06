@@ -1,32 +1,31 @@
-# 1. PHẢI CÓ TÊN CỦA TOPOLOGY Ở ĐÂY (SỬA LỖI NÀY)
+# 1. Tên của Topology
 name: my-custom-cyber-lab
 
-# 2. Định nghĩa các dải mạng
+# 2. Định nghĩa Hosts TRƯỚC (Theo yêu cầu của schema)
+hosts:
+  - name: web-server
+    base_box: 
+      image: debian-11-bullseye 
+    flavor: standard.small
+  - name: user-pc
+    base_box:
+      image: debian-11-bullseye
+    flavor: standard.small
+
+# 3. Định nghĩa Networks
 networks:
   - name: dmz-network
     cidr: 10.10.10.0/24
   - name: user-network
     cidr: 192.168.1.0/24
 
-# 3. Định nghĩa Router
+# 4. Định nghĩa Routers
 routers:
   - name: main-router
     cidr: 10.10.0.0/16
     flavor: standard.small
 
-# 4. Định nghĩa các máy ảo (Đã sửa base_box từ bước trước)
-hosts:
-  - name: web-server
-    base_box: 
-      image: debian-11-bullseye 
-    flavor: standard.small
-    
-  - name: user-pc
-    base_box:
-      image: debian-11-bullseye
-    flavor: standard.small
-
-# 5. Kết nối Host vào Network
+# 5. Định nghĩa Net Mappings
 net_mappings:
   - host: web-server
     network: dmz-network
@@ -35,7 +34,7 @@ net_mappings:
     network: user-network
     ip: 192.168.1.50
 
-# 6. Kết nối Router vào Network
+# 6. Định nghĩa Router Mappings
 router_mappings:
   - router: main-router
     network: dmz-network
