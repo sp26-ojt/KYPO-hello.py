@@ -1,29 +1,32 @@
-# Định nghĩa các dải mạng (Subnets)
+# 1. PHẢI CÓ TÊN CỦA TOPOLOGY Ở ĐÂY (SỬA LỖI NÀY)
+name: my-custom-cyber-lab
+
+# 2. Định nghĩa các dải mạng
 networks:
   - name: dmz-network
     cidr: 10.10.10.0/24
   - name: user-network
     cidr: 192.168.1.0/24
 
-# Định nghĩa Router
+# 3. Định nghĩa Router
 routers:
   - name: main-router
-    cidr: 10.10.0.0/16 # Dải IP quản lý của router (tùy chọn theo hệ thống)
+    cidr: 10.10.0.0/16
     flavor: standard.small
 
-# Định nghĩa các máy ảo (SỬA LỖI TẠI ĐÂY)
+# 4. Định nghĩa các máy ảo (Đã sửa base_box từ bước trước)
 hosts:
   - name: web-server
     base_box: 
-      image: debian-11-bullseye  # Thay bằng tên Image chính xác trong OpenStack của bạn
+      image: debian-11-bullseye 
     flavor: standard.small
     
   - name: user-pc
     base_box:
-      image: debian-11-bullseye  # Thay bằng tên Image chính xác trong OpenStack của bạn
+      image: debian-11-bullseye
     flavor: standard.small
 
-# Kết nối Host vào Network
+# 5. Kết nối Host vào Network
 net_mappings:
   - host: web-server
     network: dmz-network
@@ -32,7 +35,7 @@ net_mappings:
     network: user-network
     ip: 192.168.1.50
 
-# Kết nối Router vào Network
+# 6. Kết nối Router vào Network
 router_mappings:
   - router: main-router
     network: dmz-network
