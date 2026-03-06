@@ -1,25 +1,25 @@
 # 1. Tên định danh
-name: my-custom-cyber-lab
+name: sp26-ojt-lab
 
-# 2. Định nghĩa Hosts
+# 2. Định nghĩa Hosts (Sử dụng Image debian-12-x86_64)
 hosts:
   - name: web-server
     base_box: 
-      image: debian-11-bullseye 
-    flavor: standard.small
+      image: debian-12-x86_64 
+    flavor: standard.small  # Kiểm tra lại bằng lệnh 'openstack flavor list'
   - name: user-pc
     base_box:
-      image: debian-11-bullseye
+      image: debian-12-x86_64
     flavor: standard.small
 
 # 3. Định nghĩa Routers
 routers:
   - name: main-router
     base_box:
-      image: debian-11-bullseye
+      image: debian-12-x86_64
     flavor: standard.small
 
-# 4. Định nghĩa Networks (ĐƯA LÊN TRƯỚC GROUPS)
+# 4. Định nghĩa Networks
 networks:
   - name: dmz-network
     cidr: 10.10.10.0/24
