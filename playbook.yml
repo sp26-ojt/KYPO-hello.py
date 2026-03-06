@@ -1,0 +1,19 @@
+- name: Configure Web Server
+  hosts: web-server
+  become: yes
+  tasks:
+    - name: Install Apache2
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+    - name: Create a simple landing page
+      copy:
+        content: "<h1>Welcome to KYPO Cyber Range Lab!</h1>"
+        dest: /var/www/html/index.html
+
+- name: Configure User PC
+  hosts: user-pc
+  tasks:
+    - name: Check connectivity to Web Server
+      shell: ping -c 3 10.10.10.10
