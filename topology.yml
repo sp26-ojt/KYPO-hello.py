@@ -1,7 +1,15 @@
 # 1. Tên định danh
 name: my-custom-cyber-lab
 
-# 2. Hosts (Danh sách máy ảo)
+# 2. Định nghĩa các nhóm (SỬA LỖI TẠI ĐÂY)
+# Hệ thống yêu cầu thuộc tính 'groups', chúng ta tạo một nhóm mặc định chứa tất cả các máy.
+groups:
+  - name: internal-servers
+    nodes:
+      - web-server
+      - user-pc
+
+# 3. Hosts (Danh sách máy ảo)
 hosts:
   - name: web-server
     base_box: 
@@ -12,21 +20,21 @@ hosts:
       image: debian-11-bullseye
     flavor: standard.small
 
-# 3. Routers (SỬA LỖI TẠI ĐÂY)
+# 4. Routers
 routers:
   - name: main-router
     base_box:
-      image: debian-11-bullseye # Hoặc một image router chuyên dụng nếu có
+      image: debian-11-bullseye
     flavor: standard.small
 
-# 4. Networks
+# 5. Networks
 networks:
   - name: dmz-network
     cidr: 10.10.10.0/24
   - name: user-network
     cidr: 192.168.1.0/24
 
-# 5. Net Mappings
+# 6. Net Mappings
 net_mappings:
   - host: web-server
     network: dmz-network
@@ -35,7 +43,7 @@ net_mappings:
     network: user-network
     ip: 192.168.1.50
 
-# 6. Router Mappings
+# 7. Router Mappings
 router_mappings:
   - router: main-router
     network: dmz-network
